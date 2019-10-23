@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 import './transaction.dart';
 
@@ -23,6 +24,10 @@ class MyHomePage extends StatelessWidget {
     Transaction(
         id: 't2', title: 'Tomatoes', amount: 10.99, date: DateTime.now())
   ];
+
+  final titleController = TextEditingController();
+  final amountController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -39,6 +44,32 @@ class MyHomePage extends StatelessWidget {
               color: Colors.blue,
               elevation: 10,
               child: Text('Chart'),
+            ),
+          ),
+          Card(
+            elevation: 10,
+            child: Container(
+              padding: EdgeInsets.all(10),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: <Widget>[
+                  TextField(
+                    decoration: InputDecoration(labelText: 'Title'),
+                    controller: titleController,
+                  ),
+                  TextField(
+                    decoration: InputDecoration(labelText: 'Amount'),
+                    controller: amountController,
+                  ),
+                  FlatButton(
+                    child: Text('Add Transaction'),
+                    textColor: Colors.purple,
+                    onPressed: () {
+                      print(titleController.text);
+                    },
+                  )
+                ],
+              ),
             ),
           ),
           Column(
@@ -76,7 +107,7 @@ class MyHomePage extends StatelessWidget {
                         ),
                       ),
                       Text(
-                        tx.date.toString(),
+                        DateFormat.yMMMd().format(tx.date),
                         style: TextStyle(
                           color: Colors.grey,
                         ),
