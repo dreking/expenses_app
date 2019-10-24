@@ -10,27 +10,30 @@ class Chart extends StatelessWidget {
   Chart(this.recentTransactions);
 
   List<Map<String, Object>> get groupedTransactionValues {
-    return List.generate(7, (index) {
-      final weekDay = DateTime.now().subtract(
-        Duration(days: index),
-      );
+    return List.generate(
+      7,
+      (index) {
+        final weekDay = DateTime.now().subtract(
+          Duration(days: index),
+        );
 
-      var totalAmount = 0.0;
-      for (var i = 0; i < recentTransactions.length; i++) {
-        if (recentTransactions[i].date.day == weekDay.day &&
-            recentTransactions[i].date.month == weekDay.month &&
-            recentTransactions[i].date.year == weekDay.year) {
-          totalAmount += recentTransactions[i].amount;
+        var totalAmount = 0.0;
+        for (var i = 0; i < recentTransactions.length; i++) {
+          if (recentTransactions[i].date.day == weekDay.day &&
+              recentTransactions[i].date.month == weekDay.month &&
+              recentTransactions[i].date.year == weekDay.year) {
+            totalAmount += recentTransactions[i].amount;
+          }
         }
-      }
-      print(DateFormat.E().format(weekDay));
-      print(totalAmount);
+        print(DateFormat.E().format(weekDay));
+        print(totalAmount);
 
-      return {
-        'day': DateFormat.E().format(weekDay).substring(0, 1),
-        'amount': totalAmount,
-      };
-    });
+        return {
+          'day': DateFormat.E().format(weekDay).substring(0, 1),
+          'amount': totalAmount,
+        };
+      },
+    ).reversed.toList();
   }
 
   double get totalSpending {
@@ -42,7 +45,7 @@ class Chart extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     groupedTransactionValues;
-    return Padding(
+    return Container(
       padding: EdgeInsets.all(10),
       child: Card(
         elevation: 10,
